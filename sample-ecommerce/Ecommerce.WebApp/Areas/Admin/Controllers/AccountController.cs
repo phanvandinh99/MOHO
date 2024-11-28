@@ -8,12 +8,9 @@ using Microsoft.AspNetCore.Mvc;
 namespace Ecommerce.WebApp.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    //[Route("admin/auth")]
-    //[Route("Account")]
-    //[Route("admin")]
-    [Route("Admin/[controller]/[action]")]
-
-
+    [Route("admin/auth")]
+    [Route("Account")]
+    [Route("admin")]
     public class AccountController : Controller
     {
         private readonly UserManager<AppUser> userManager;
@@ -26,8 +23,8 @@ namespace Ecommerce.WebApp.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        //[Route("login")]
-        [Route("Login")]
+        [Route("login")]
+        //[Route("Login")]
         [AllowAnonymous]
         public async Task<IActionResult> Login()
         {

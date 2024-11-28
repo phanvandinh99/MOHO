@@ -64,10 +64,10 @@ app.UseEndpoints(endpoints =>
         name: "areas",
         pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
-    // Cấu hình cho các route không phải trong Areas
+    // Cấu hình cho các route không phải trong Areas (khách hàng)
     endpoints.MapControllerRoute(
         name: "default",
-        pattern: "Admin/{controller=Home}/{action=Index}/{id?}");
+        pattern: "{controller=Home}/{action=Index}/{id?}");
 });
 
 app.Run();

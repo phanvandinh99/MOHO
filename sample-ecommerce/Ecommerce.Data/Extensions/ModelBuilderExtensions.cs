@@ -50,7 +50,7 @@ namespace Ecommerce.Data.Extensions
                 Email = "root@gmail.com",
                 NormalizedEmail = "ROOT@GMAIL.COM",
                 EmailConfirmed = true,
-                PasswordHash = hasher.HashPassword(null, "Abc123!@#"),
+                PasswordHash = hasher.HashPassword(null, "Abc123"),
                 SecurityStamp = string.Empty,
                 LastName = "root",
                 FirstName = "root",

@@ -1,0 +1,198 @@
+﻿@model IEnumerable<Ecommerce.Data.ViewModel.ListOrdersViewModel>
+@{
+    ViewData["Title"] = "Đơn hàng của bạn";
+}
+
+<!-- Breadcrumb Section Begin -->
+<section class="breadcrumb-section set-bg" data-setbg="/client/img/breadcrumb.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="breadcrumb__text">
+                    <h2>Đơn hàng của bạn</h2>
+                    <div class="breadcrumb__option">
+                        <a href="/">Home</a>
+                        <span>Đơn hàng</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb Section End
+
+-->
+
+<section class="shoping-cart spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="featured__controls">
+                    <ul>
+                        <li class="active" data-filter="*">Tất cả</li>
+                        <li data-filter=".cxn">Chờ Xác Nhận</li>
+                        <li data-filter=".clh">Chờ Lấy Hàng</li>
+                        <li data-filter=".dgg">Đang Giao</li>
+                        <li data-filter=".dg">Đã Giao</li>
+                        <li data-filter=".dh">Đã Hủy</li>
+                    </ul>
+                </div>
+                <div class="featured__filter">
+
+
+                    @foreach (var item in Model)
+                    {
+                        <div class="shoping__cart__table mix @if(item.OrderStatus == 0) {
+                    <text>dh</text>
+}
+                                                         @if(item.OrderStatus == 1) {
+                    <text>cxn</text>
+}
+                                                         @if(item.OrderStatus == 2) {
+                    <text>clh</text>
+}
+                                                         @if(item.OrderStatus == 3) {
+                    <text>dgg</text>
+}
+                                                         @if(item.OrderStatus == 4) {
+                    <text>dg</text>
+}">
+                                                <section class="d-flex mb-3" style="justify-content: space-between;">
+                                                    <p>
+                                                        <span>Mã đơn hàng: <b>DH_@item.OrderId</b></span> | Ngày đặt: @item.OrderDate.ToString("dd/MM/yyyy") |
+                                    @{
+                                        switch (item.OrderStatus)
+                                        {
+                                            case 0:
+                                                                                                                    <span class="text-danger"><b>Đã Hủy</b></span>
+                                                break;
+                                            case 1:
+                                                                                                                    <span class="text-success"><b>Chờ Xác Nhận</b></span>
+                                                break;
+                                            case 2:
+                                                                                                                    <span class="text-success"><b>Chờ Lấy Hàng</b></span>
+                                                break;
+                                            case 3:
+                                                                                                                    <span class="text-success"><b>Đang Giao</b></span>
+                                                break;
+                                            case 4:
+                                                                                                                    <span class="text-success"><b>Đã Giao</b></span>
+                                                break;
+                                            default:
+                                                                                                                    <span class="text-success"></span>
+                                                break;
+                                        }
+                                    }
+                                                    </p>
+                                                    <div>
+                                    @*<a href="#" class="btn-sm btn-success">Xem chi tiết</a>*@
+                                    @if (item.OrderStatus == 1 || item.OrderStatus == 2)
+                                    {
+                                                                        <a href="/order/cancel-order/@item.OrderId" class="btn-sm btn-danger">Hủy đơn hàng</a>
+                                    }
+                                    @if (item.OrderStatus == 0)
+                                    {
+                                                                        <a href="/order/delete-order/@item.OrderId" class="text-danger">Xóa đơn hàng</a>
+                                    }
+
+                                            </div>
+                                        </section>
+
+
+                                        <table>
+                                            <tbody id="items">
+
+                                    @foreach (var order in item.Detail)
+                                    {
+                                                                    <tr class="targetfields">
+                                                                        <td class="shoping__cart__item">
+                                                                            <img src="https://localhost:7025/products/images/@order.Product.UrlImage" alt="@order.Product.Name" style="width: 50px;">
+
+                                                                            <a href="/product/item.ProductSlug">
+                                                                                <h5>
+                                                        @order.Product.Name
+                                                                                </h5>
+                                                                            </a>
+                                                                            <br />
+                                                                        </td>
+                                                                        <td class="shoping__cart__price" style="width: 200px">
+                                                @string.Format("{0:0,0}", order.Product.Price) đ
+
+                                                                            <i class="pl-3" style="font-weight: 400">
+                                                                                (x @order.Quantity)
+
+                                                                            </i>
+                                                                        </td>
+                                                                        <td class="shoping__cart__total__@item.OrderId" id="total_item.CartId">
+                                                @string.Format("{0:0,0}", order.Price) đ
+                                                                        </td>
+                                                                    </tr>
+                                    }
+
+
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <th></th>
+                                                    <th>Tổng số tiền</th>
+                                                    <th>
+                                                        <span style="font-size: 18px; color: #dd2222; float: right;" id="total__@item.OrderId">
+                                                            0
+                                                        </span>
+                                                    </th>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+
+                        <script type="text/javascript">
+                            $(document).ready(function () {
+                                total_calculate(@item.OrderId);
+                            });
+                            function total_calculate(id) {
+                                var total = 0;
+                                // Loop through subtotal
+                                $(".targetfields .shoping__cart__total__" + id).each(function () {
+                                    // Lấy giá trị và loại bỏ dấu ',' và 'đ'
+                                    var value = $(this).text().replace(/,/g, '').replace(/đ/g, '').trim();
+                                    // Check nếu không rỗng, parse thành số, ngược lại gán giá trị là 0
+                                    value = value !== "" ? parseFloat(value) : 0;
+                                    total += value; // Cộng dồn giá trị
+                                });
+                                // Gán giá trị tổng vào span #total với định dạng tiền VND
+                                $("#total__" + id).text(formatCurrency(total));
+                            }
+
+                            // Hàm định dạng tiền VND
+                            function formatCurrency(amount) {
+                                return amount.toLocaleString('vi-VN') + " đ";
+                            }
+
+                        </script>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .shoping__cart__table {
+        border: 1px solid #e7e1e1;
+        margin-bottom: 20px;
+        display: block;
+        border-radius: 4px;
+        padding: 20px 30px;
+        box-shadow: 6px 6px 5px #cccccc1c;
+    }
+
+        .shoping__cart__table table tfoot tr th {
+            padding-top: 15px;
+        }
+
+        .shoping__cart__table table tbody tr td {
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+</style>

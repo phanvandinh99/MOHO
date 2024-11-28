@@ -1,0 +1,193 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<AppUser> SignInManager
+@inject UserManager<AppUser> UserManager
+@{
+    var user = await UserManager.GetUserAsync(User);
+}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>@ViewData["Title"] - EShop Admin</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="/admin/template/assets/vendors/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="/admin/template/assets/vendors/flag-icon-css/css/flag-icon.min.css">
+    <link rel="stylesheet" href="/admin/template/assets/vendors/css/vendor.bundle.base.css">
+
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <!-- endinject -->
+    <!-- Layout styles -->
+    <link rel="stylesheet" href="/admin/template/assets/css/demo_1/style.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" />
+    <!-- End layout styles -->
+    <link rel="shortcut icon" href="/admin/template/assets/images/favicon.png" />
+
+  </head>
+  <body>
+    <div class="container-scroller">
+      <!-- partial:../../partials/_sidebar.html -->
+      <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+          <li class="nav-item nav-profile border-bottom">
+            <a href="#" class="nav-link flex-column">
+              <div class="nav-profile-image">
+                            <img src="/client/img/logo.png" style="object-fit: contain;" alt="profile" />
+                <!--change to offline or busy as needed-->
+              </div>
+              @if (SignInManager.IsSignedIn(User)) 
+                        {
+                            <div class="nav-profile-text d-flex ml-0 mb-3 flex-column">
+                                <span class="font-weight-semibold mb-1 mt-2 text-center">@(user.FullName ?? user.UserName)</span>
+                                <span class="text-secondary icon-sm text-center">Quản Trị</span>
+                            </div>
+                        }
+                    </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/admin">
+              <i class="mdi mdi-compass-outline menu-icon"></i>
+              <span class="menu-title">Trang tổng quan</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+              <i class="mdi mdi-crosshairs-gps menu-icon"></i>
+              <span class="menu-title">Sản phẩm</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ui-basic">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item">
+                  <a class="nav-link" href="/admin/category">Danh mục</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/admin/product">Sản phẩm</a>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#ui-basic1" aria-expanded="false" aria-controls="ui-basic1">
+              <i class="mdi mdi-crosshairs-gps menu-icon"></i>
+              <span class="menu-title">Đơn hàng</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ui-basic1">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item">
+                  <a class="nav-link" href="/admin/order/5">Tất cả đơn hàng</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/admin/order/1">Đơn chờ xác nhận</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/admin/order/2">Đơn chờ lấy hàng</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/admin/order/3">Đơn đang giao</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/admin/order/4">Đơn đã giao</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/admin/order/0">Đơn đã hủy</a>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#ui-basic2" aria-expanded="false" aria-controls="ui-basic2">
+              <i class="mdi mdi-crosshairs-gps menu-icon"></i>
+              <span class="menu-title">Quyền & Người dùng</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ui-basic2">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item">
+                  <a class="nav-link" href="/admin/auth/list-roles">Tất cả quyền</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/admin/users">Tất cả người dùng</a>
+                </li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+      </nav>
+      <!-- partial -->
+      <div class="container-fluid page-body-wrapper">
+
+        <!-- partial:../../partials/_navbar.html -->
+        <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+          <div class="navbar-menu-wrapper d-flex align-items-stretch">
+            <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+              <span class="mdi mdi-chevron-double-left"></span>
+            </button>
+
+            <ul class="navbar-nav navbar-nav-right">
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            <li class="nav-item nav-profile dropdown d-none d-md-block">
+                                <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+                                    <div class="nav-profile-text">@(user.FullName ?? user.UserName) </div>
+                                </a>
+                                <div class="dropdown-menu center navbar-dropdown" aria-labelledby="profileDropdown">
+                                    <a class="dropdown-item" href="/admin/auth/logout">
+                                        Đăng xuất </a>
+                                </div>
+                            </li>
+                        }
+                        <li class="nav-item nav-logout d-none d-lg-block">
+                <a class="nav-link" href="/">
+                  <i class="mdi mdi-home-circle"></i>
+                </a>
+              </li>
+            </ul>
+            <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+              <span class="mdi mdi-menu"></span>
+            </button>
+          </div>
+        </nav>
+        <!-- partial -->
+        <div class="main-panel">
+        @RenderBody()
+        </div>
+        <!-- main-panel ends -->
+      </div>
+      <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+    <!-- plugins:js -->
+    <script src="/admin/template/assets/vendors/js/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page -->
+    <!-- End plugin js for this page -->
+    <!-- inject:js -->
+    <script src="/admin/template/assets/js/off-canvas.js"></script>
+    <script src="/admin/template/assets/js/hoverable-collapse.js"></script>
+    <script src="/admin/template/assets/js/misc.js"></script>
+    <script src="/admin/template/assets/js/settings.js"></script>
+    <script src="/admin/template/assets/js/todolist.js"></script>
+    <!-- endinject -->
+    <!-- Custom js for this page -->
+    <!-- End custom js for this page -->
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.all.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+
+<!-- Initialize Quill editor -->
+
+
+    @await RenderSectionAsync("Scripts", required: false)
+  </body>
+</html>
+

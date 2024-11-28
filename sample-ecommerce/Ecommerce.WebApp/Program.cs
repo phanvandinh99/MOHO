@@ -1,4 +1,4 @@
-using Ecommerce.Data.DataContext;
+﻿using Ecommerce.Data.DataContext;
 using Ecommerce.Data.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -10,13 +10,13 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.Configure<CookiePolicyOptions>(options =>
 {
-    // This lambda determines whether user consent for non-essential cookies is needed for a given request.
     options.CheckConsentNeeded = context => true;
     options.MinimumSameSitePolicy = SameSiteMode.None;
 });
 
-builder.Services.AddDbContext<DataDbContext>(options => options.UseSqlServer(
-                            builder.Configuration.GetConnectionString("ConnectionString")));
+builder.Services.AddDbContext<DataDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionString"))
+);
 
 builder.Services.AddTransient<DataDbContext>();
 builder.Services.AddIdentity<AppUser, AppRole>(options =>
@@ -27,18 +27,16 @@ builder.Services.AddIdentity<AppUser, AppRole>(options =>
     options.Password.RequireUppercase = false;
     options.SignIn.RequireConfirmedAccount = false;
 })
-                .AddEntityFrameworkStores<DataDbContext>()
-                .AddDefaultTokenProviders();
+.AddEntityFrameworkStores<DataDbContext>()
+.AddDefaultTokenProviders();
 
-builder.Services.AddTransient<UserManager<AppUser>, UserManager<AppUser>>();
-builder.Services.AddTransient<SignInManager<AppUser>, SignInManager<AppUser>>();
+builder.Services.AddTransient<UserManager<AppUser>>();
+builder.Services.AddTransient<SignInManager<AppUser>>();
 
-builder.Services.AddSession(options => {
+builder.Services.AddSession(options =>
+{
     options.IdleTimeout = TimeSpan.FromMinutes(30);
 });
-
-builder.Services.AddSession();
-
 
 var app = builder.Build();
 
@@ -46,7 +44,6 @@ var app = builder.Build();
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
@@ -56,26 +53,21 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthentication();
-
 app.UseAuthorization();
-
-app.UseSession();
-
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+app.UseDeveloperExceptionPage();
+app.UseSession(); // Ensure UseSession is placed correctly
 
 app.UseEndpoints(endpoints =>
 {
+    // Cấu hình cho các route trong các Areas (Admin)
     endpoints.MapControllerRoute(
-      name: "areas",
-      pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
-    );
+        name: "areas",
+        pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
+    // Cấu hình cho các route không phải trong Areas
     endpoints.MapControllerRoute(
-     name: "areas",
-     pattern: "{area:Admin}/{controller=Home}/{action=Index}/{id?}"
-   );
+        name: "default",
+        pattern: "Admin/{controller=Home}/{action=Index}/{id?}");
 });
 
 app.Run();

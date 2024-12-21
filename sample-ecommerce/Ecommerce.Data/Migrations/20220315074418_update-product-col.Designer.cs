@@ -264,32 +264,32 @@ namespace Ecommerce.Data.Migrations
                         new
                         {
                             Id = 1,
-                            Name = "Khuyến mãi sốc",
-                            Slug = "khuyen-mai-soc"
+                            Name = "Giường Ngủ",
+                            Slug = "giuong-ngu"
                         },
                         new
                         {
                             Id = 2,
-                            Name = "Thời trang nam",
-                            Slug = "thoi-trang-nam"
+                            Name = "Tủ Bếp",
+                            Slug = "tu-bep"
                         },
                         new
                         {
                             Id = 3,
-                            Name = "Thời trang nữ",
-                            Slug = "thoi-trang-nu"
+                            Name = "Tủ Quần Áo",
+                            Slug = "tu-quan-ao"
                         },
                         new
                         {
                             Id = 4,
-                            Name = "Kính mắt thời trang",
-                            Slug = "kinh-mat-thoi-trang"
+                            Name = "Bàn Trang Điểm",
+                            Slug = "ban-trang-diem"
                         },
                         new
                         {
                             Id = 5,
-                            Name = "Phụ kiện hot",
-                            Slug = "phu-kien-hot"
+                            Name = "Phòng Làm Việc",
+                            Slug = "phong-lam-viec"
                         });
                 });
 

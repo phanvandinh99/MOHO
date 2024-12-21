@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Ecommerce.Data.Migrations
 {
     [DbContext(typeof(DataDbContext))]
-    [Migration("20220317053125_update-order-col")]
-    partial class updateordercol
+    [Migration("20241221055712_MyInitialCreate")]
+    partial class MyInitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -59,7 +59,7 @@ namespace Ecommerce.Data.Migrations
                         new
                         {
                             Id = new Guid("8d04dce2-969a-435d-bba4-df3f325983dc"),
-                            ConcurrencyStamp = "a972a81f-1051-4613-920b-24d0a370ecfc",
+                            ConcurrencyStamp = "3e23d9b6-5523-4048-8e64-316317635585",
                             Description = "Administrator role",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
@@ -67,7 +67,7 @@ namespace Ecommerce.Data.Migrations
                         new
                         {
                             Id = new Guid("92a170c6-118c-45c9-053a-08d83b9c9ecb"),
-                            ConcurrencyStamp = "99aad336-4ee4-48fd-8b9e-87d1ce28d1d1",
+                            ConcurrencyStamp = "3207c000-a35a-4f63-bba9-6f272ff22315",
                             Description = "Content Writter",
                             Name = "Blogger",
                             NormalizedName = "BLOGGER"
@@ -75,7 +75,7 @@ namespace Ecommerce.Data.Migrations
                         new
                         {
                             Id = new Guid("aa6f243a-5cbc-42d5-a432-08d83b5447b1"),
-                            ConcurrencyStamp = "5c6c1f6b-8c65-4d53-99bb-15d7d51b5451",
+                            ConcurrencyStamp = "702da5a4-6acb-4f87-9d72-518e5d25613c",
                             Description = "Member",
                             Name = "User",
                             NormalizedName = "USER"
@@ -83,7 +83,7 @@ namespace Ecommerce.Data.Migrations
                         new
                         {
                             Id = new Guid("939528cd-a6f3-450b-053b-08d83b9c9ecb"),
-                            ConcurrencyStamp = "be4425cb-68ee-4f17-b38f-8916d38fabfe",
+                            ConcurrencyStamp = "1bf60602-0050-41cb-a64b-2d28c72327de",
                             Description = "Sales Collatorabor",
                             Name = "Seller",
                             NormalizedName = "SELLER"
@@ -182,7 +182,7 @@ namespace Ecommerce.Data.Migrations
                         {
                             Id = new Guid("69bd714f-9576-45ba-b5b7-f00649be00de"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "6272e0ee-7a59-4ecf-b872-acce4ec73e58",
+                            ConcurrencyStamp = "b08a344f-29bc-4ae1-addf-236b153115ad",
                             Email = "root@gmail.com",
                             EmailConfirmed = true,
                             FirstName = "root",
@@ -190,13 +190,56 @@ namespace Ecommerce.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ROOT@GMAIL.COM",
                             NormalizedUserName = "ROOT@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEE9D3bHJYjAsleGM8POhQUCGJccC+r35i7INCX//xHTzyas+xsvZxAGXwf9mEjUtvA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEAlimntWYeTTJWGOL+PZfBV4qU+Zs69RzGSKczEqj/UPp9iOU/gPhxkQmYQUGBflXA==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
                             UrlAvatar = "imart-avt.jpg",
                             UserName = "root@gmail.com"
                         });
+                });
+
+            modelBuilder.Entity("Ecommerce.Data.Entities.Article", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Image")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsPublished")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("PublishDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Slug")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Articles");
                 });
 
             modelBuilder.Entity("Ecommerce.Data.Entities.Cart", b =>

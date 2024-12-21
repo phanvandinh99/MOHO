@@ -64,11 +64,11 @@ namespace Ecommerce.Data.Extensions
             });
 
             modelBuilder.Entity<Category>().HasData(
-               new Category() { Id = 1, Name = "Khuyến mãi sốc", Slug = "khuyen-mai-soc", ParentId = null},
-               new Category() { Id = 2, Name = "Thời trang nam", Slug = "thoi-trang-nam", ParentId = null},
-               new Category() { Id = 3, Name = "Thời trang nữ", Slug = "thoi-trang-nu", ParentId = null},
-               new Category() { Id = 4, Name = "Kính mắt thời trang", Slug = "kinh-mat-thoi-trang"},
-               new Category() { Id = 5, Name = "Phụ kiện hot", Slug = "phu-kien-hot", ParentId = null}
+               new Category() { Id = 1, Name = "Giường Ngủ", Slug = "giuong-ngu", ParentId = null},
+               new Category() { Id = 2, Name = "Tủ Bếp", Slug = "tu-bep", ParentId = null},
+               new Category() { Id = 3, Name = "Tủ Quần Áo", Slug = "tu-quan-ao", ParentId = null},
+               new Category() { Id = 4, Name = "Bàn Trang Điểm", Slug = "ban-trang-diem"},
+               new Category() { Id = 5, Name = "Phòng Làm Việc", Slug = "phong-lam-viec", ParentId = null}
            );
 
         }

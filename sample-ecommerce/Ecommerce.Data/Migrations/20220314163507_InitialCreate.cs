@@ -322,11 +322,11 @@ namespace Ecommerce.Data.Migrations
                 columns: new[] { "Id", "Name", "ParentId", "Slug", "Status" },
                 values: new object[,]
                 {
-                    { 1, "Khuyến mãi sốc", null, "khuyen-mai-soc", null },
-                    { 2, "Thời trang nam", null, "thoi-trang-nam", null },
-                    { 3, "Thời trang nữ", null, "thoi-trang-nu", null },
-                    { 4, "Kính mắt thời trang", null, "kinh-mat-thoi-trang", null },
-                    { 5, "Phụ kiện hot", null, "phu-kien-hot", null }
+                    { 1, "Giường Ngủ", null, "giuong-ngu", null },
+                    { 2, "Tủ Bếp", null, "tu-bep", null },
+                    { 3, "Tủ Quần Áo", null, "tu-quan-ao", null },
+                    { 4, "Bàn Trang Điểm", null, "ban-trang-diem", null },
+                    { 5, "Phòng Làm Việc", null, "phong-lam-viec", null }
                 });
 
             migrationBuilder.InsertData(

@@ -1,5 +1,4 @@
-﻿using Ecommerce.Data.DataContext;
-using Ecommerce.Data.Entities;
+﻿using Ecommerce.Data.Entities;
 using Ecommerce.Data.ViewModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;

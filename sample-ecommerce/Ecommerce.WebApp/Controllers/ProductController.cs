@@ -63,16 +63,5 @@ namespace Ecommerce.WebApp.Controllers
             var item = await _context.Products.Where(p => p.Slug == slug).FirstOrDefaultAsync();
             return View(item);
         }
-
-        public IActionResult CategoryPartial()
-        {
-            var categories = _context.Categories
-                                     .Where(c => c.Status == true)
-                                     .OrderBy(c => c.Name)
-                                     .ToList();
-
-            return PartialView("Product/_CategoryPartial", categories);
-        }
-
     }
 }

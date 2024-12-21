@@ -2,10 +2,10 @@
 @model IEnumerable<Category>
 
 <ul class="header__menu__dropdown">
-    @foreach (var category in Model)
+    @foreach (var cat in Model)
     {
         <li>
-            <a href="#">@category.Name</a>
+        <li><a href="/product?catelog=@cat.Slug">@cat.Name</a></li>
         </li>
     }
 </ul>

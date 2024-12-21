@@ -31,16 +31,6 @@
                         <img class="product__details__pic__item--large"
                              src="https://localhost:7025/products/images/@Model.UrlImage" alt="@Model.Name">
                     </div>
-                    @*<div class="product__details__pic__slider owl-carousel">
-                    <img data-imgbigurl="/client/img/product/details/product-details-2.jpg"
-                    src="/client/img/product/details/thumb-1.jpg" alt="@Model.Name">
-                    <img data-imgbigurl="/client/img/product/details/product-details-3.jpg"
-                    src="/client/img/product/details/thumb-2.jpg" alt="">
-                    <img data-imgbigurl="/client/img/product/details/product-details-5.jpg"
-                    src="/client/img/product/details/thumb-3.jpg" alt="">
-                    <img data-imgbigurl="/client/img/product/details/product-details-4.jpg"
-                    src="/client/img/product/details/thumb-4.jpg" alt="">
-                    </div>*@
                 </div>
             </div>
             <div class="col-lg-6 col-md-6">
@@ -59,7 +49,7 @@
                     <div class="product__details__quantity">
                         <div class="quantity">
                             <div class="pro-qty">
-                                <input type="text" value="1">
+                                <input type="text" id="quantity_@Model.Id" value="1" min="1">
                             </div>
                         </div>
                     </div>
@@ -161,8 +151,9 @@
         var productId = $("#productId_" + id).val();
         var price = $("#price_" + id).val();
         var quantity = $("#quantity_" + id).val();
+
         var data = {
-            'productId': productId,
+            'productId': id,
             'price': price,
             'quantity': quantity
         }

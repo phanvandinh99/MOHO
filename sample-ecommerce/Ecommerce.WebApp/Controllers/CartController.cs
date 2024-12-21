@@ -27,37 +27,49 @@ namespace Ecommerce.WebApp.Controllers
         {
             var currentUserId = await userManager.GetUserAsync(User);
 
-            // check exist item and increase quantity
-            var check = await _context.Carts.Where(c => c.ProductId == productId && c.UserId == currentUserId.Id).CountAsync();
+            // Tìm kiếm sản phẩm
+            Product product = await _context.Products.FindAsync(productId);
 
-            if(check == 0)
+            if (product == null)
             {
-                Cart item = new Cart()
+                return NotFound(new { message = "Sản phẩm không tồn tại." });
+            }
+
+            // Kiểm tra số lượng trong kho đủ đáp ứng không
+            if (product.Quantity < quantity)
+            {
+                return BadRequest(new { message = "Sản phẩm không đáp ứng số lượng yêu cầu." });
+            }
+
+            // Kiểm tra xem sản phẩm đã có trong giỏ hàng chưa
+            var existingCart = await _context.Carts
+                .FirstOrDefaultAsync(c => c.ProductId == productId && c.UserId == currentUserId.Id);
+
+            if (existingCart == null)
+            {
+                // Tạo mới sản phẩm trong giỏ hàng
+                Cart item = new Cart
                 {
-                    Id = new int(),
                     ProductId = productId,
                     Quantity = quantity,
-                    Price = price,
+                    Price = product.Price,
                     DateCreated = DateTime.Now,
                     UserId = currentUserId.Id,
                 };
                 _context.Carts.Add(item);
-                await _context.SaveChangesAsync();
-
-                return Ok(item);
-            } else
-            {
-                // get cart
-                var existCart = await _context.Carts.Where(c => c.ProductId == productId && c.UserId == currentUserId.Id).FirstOrDefaultAsync();
-
-                // update quantity
-                existCart.Quantity = existCart.Quantity + quantity;
-                _context.Carts.Update(existCart);
-                await _context.SaveChangesAsync();
-
-                return Ok();
             }
+            else
+            {
+                // Cập nhật số lượng sản phẩm trong giỏ hàng
+                existingCart.Quantity += quantity;
+                _context.Carts.Update(existingCart);
+            }
+
+            await _context.SaveChangesAsync();
+
+            return Ok(new { message = "Thêm vào giỏ hàng thành công." });
         }
+
 
         [HttpGet]
         [Route("check-item/{productId}")]

@@ -189,28 +189,41 @@
                     text: "Thêm vào giỏ hàng thành công!",
                     duration: 3000,
                     close: true,
-                    gravity: "top", // `top` or `bottom`
-                    position: "left", // `left`, `center` or `right`
-                    stopOnFocus: true, // Prevents dismissing of toast on hover
+                    gravity: "top",
+                    position: "left",
+                    stopOnFocus: true,
                     style: {
                         background: "linear-gradient(to right, #00b09b, #96c93d)",
                     },
-                    onClick: function () { } // Callback after click
+                    onClick: function () { }
                 }).showToast();
+
                 var newCartNum = parseInt($("#cartNum").text()) + 1;
                 if (isIncrease) {
                     $("#cartNum").text(newCartNum);
                 }
             },
             error: function (error) {
-                console.log('Failed ');
-                console.log(error.status);
-                if (error.status == 401) {
+                if (error.status === 400) {
+                    const response = JSON.parse(error.responseText);
+                    Toastify({
+                        text: response.message,
+                        duration: 3000,
+                        close: true,
+                        gravity: "top",
+                        position: "left",
+                        stopOnFocus: true,
+                        style: {
+                            background: "linear-gradient(to right, #ff5f6d, #ffc371)",
+                        },
+                    }).showToast();
+                } else if (error.status === 401) {
                     window.location.href = "/dang-nhap";
+                } else {
+                    console.log('Failed: ', error);
                 }
             }
-        })
-
+        });
     }
 
 </script>

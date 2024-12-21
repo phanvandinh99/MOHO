@@ -21,8 +21,8 @@ namespace Ecommerce.WebApp.Controllers
             ViewBag.q = q;
 
             var items = await _context.Products.OrderByDescending(p => p.Id).ToListAsync();
-            
-            if(catelog != null && q != null)
+
+            if (catelog != null && q != null)
             {
                 items = await (from c in _context.Categories
                                join pr in _context.Products on c.Id equals pr.CategoryId
@@ -31,7 +31,8 @@ namespace Ecommerce.WebApp.Controllers
                                select pr).ToListAsync();
                 return View(items);
 
-            } else
+            }
+            else
             {
                 if (catelog != null)
                 {
@@ -51,9 +52,9 @@ namespace Ecommerce.WebApp.Controllers
                     return View(items);
                 }
             }
-            
+
             items = await _context.Products.OrderByDescending(p => p.Id).ToListAsync();
-           return View(items);
+            return View(items);
         }
 
         [Route("{slug}")]
@@ -61,6 +62,16 @@ namespace Ecommerce.WebApp.Controllers
         {
             var item = await _context.Products.Where(p => p.Slug == slug).FirstOrDefaultAsync();
             return View(item);
+        }
+
+        public IActionResult CategoryPartial()
+        {
+            var categories = _context.Categories
+                                     .Where(c => c.Status == true)
+                                     .OrderBy(c => c.Name)
+                                     .ToList();
+
+            return PartialView("Product/_CategoryPartial", categories);
         }
 
     }

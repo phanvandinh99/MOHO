@@ -14,7 +14,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>@ViewData["Title"] - EShop</title>
-
+    <link rel="shortcut icon" href="/admin/template/assets/images/favicon_NoiThat.png" />
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
 
@@ -135,22 +135,27 @@
             <div class="row">
                 <div class="col-lg-3">
                     <div class="header__logo">
-                        <a href="/"><img src="/client/img/logo.png" alt=""></a>
+                        <a href="/Home/Index"><img src="/client/img/logo.png" alt=""></a>
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <nav class="header__menu">
                         <ul>
-                            <li class="active"><a href="/">Trang Chủ</a></li>
-                            <li><a href="/product">Sản Phẩm</a></li>
+                            <li class="active"><a href="/Home/Index">Trang Chủ</a></li>
+                            <li>
+                                <a href="/product">Sản Phẩm</a>
+                                @* @await Html.PartialAsync("CategoryPartial", "Product") *@
+                                @await Component.InvokeAsync("DanhMuc")
+
+                            </li>
                             <li><a href="#">Trang</a>
                                 <ul class="header__menu__dropdown">
-                                    <li><a href="/dang-nhap">Login</a></li>
-                                    <li><a href="/dang-ky">Register</a></li>
+                                    <li><a href="/dang-nhap">Đăng Nhập</a></li>
+                                    <li><a href="/dang-ky">Đăng Ký</a></li>
                                 </ul>
                             </li>
                             <li><a href="/blog">Blog</a></li>
-                            <li><a href="/contact">Liên Hệ</a></li>
+                            <li><a href="/Home/LienHe">Liên Hệ</a></li>
                         </ul>
                     </nav>
                 </div>
@@ -224,7 +229,7 @@
                             <li><a href="#">Sản Phẩm</a></li>
                             <li><a href="#">Trang</a></li>
                             <li><a href="#">Blog</a></li>
-                            <li><a href="#">Liên Hệ</a></li>
+                            <li><a href="/Home/LienHe">Liên Hệ</a></li>
                         </ul>
                         <ul>
                             <li><a href="#">Về Chúng Tôi</a></li>

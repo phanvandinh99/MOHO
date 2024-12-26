@@ -11,24 +11,24 @@
                 <div class="card-body">
                     <h4 class="card-title">Quản lý đơn hàng</h4>
                     <ul class="nav nav-tabs">
-                      <li class="nav-item">
-                        <a class="nav-link active" href="/admin/order/5">Tất Cả Đơn Hàng</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="/admin/order/1">Chờ Xác Nhận</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="/admin/order/2">Chờ Lấy Hàng</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="/admin/order/3">Đang Giao</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="/admin/order/4">Đã Giao</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="/admin/order/0">Đã Hủy</a>
-                      </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="/admin/order/5">Tất Cả Đơn Hàng</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/admin/order/1">Chờ Xác Nhận</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/admin/order/2">Chờ Lấy Hàng</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/admin/order/3">Đang Giao</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/admin/order/4">Đã Giao</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/admin/order/0">Đã Hủy</a>
+                        </li>
                     </ul>
                     <div class="table-responsive">
                         <table class="table">
@@ -82,19 +82,22 @@
                                             }
                                         </td>
                                         <td>
-                                            @if  (item.OrderStatus == 1) {
+                                            @if (item.OrderStatus == 1)
+                                            {
                                                 <a onclick="updateOrderStatus(@item.OrderId,2)">Duyệt</a>
                                                 <a onclick="/admin/order/update-order-status/@item.OrderId/0" class="text-danger">Hủy đơn</a>
                                             }
-                                            @if  (item.OrderStatus == 2) {
+                                            @if (item.OrderStatus == 2)
+                                            {
                                                 <a onclick="updateOrderStatus(@item.OrderId,3)">Đánh dấu Đang Giao</a>
                                                 <a onclick="updateOrderStatus(@item.OrderId,0)" class="text-danger">Hủy đơn</a>
                                             }
-                                            @if  (item.OrderStatus == 3) {
+                                            @if (item.OrderStatus == 3)
+                                            {
                                                 <a onclick="updateOrderStatus(@item.OrderId,4)">Đánh dấu Đã Giao</a>
                                                 <a onclick="updateOrderStatus(@item.OrderId,0)" class="text-danger">Hủy đơn</a>
                                             }
-                                            
+
                                         </td>
                                     </tr>
                                     <tr>
@@ -125,25 +128,25 @@
                                             </span>
                                             <script src="/admin/template/assets/vendors/js/vendor.bundle.base.js"></script>
                                             <script type="text/javascript">
-                                                $( document ).ready(function() {
-                                                      total_calculate(@item.OrderId);
-                                                  });
-                                                  function total_calculate(id) {
-                                                      var total = 0;
-                                                      //loop through subtotal
-                                                      $(".targetfields .shoping__cart__total__" + id).each(function() {
+                                                $(document).ready(function () {
+                                                    total_calculate(@item.OrderId);
+                                                });
+                                                function total_calculate(id) {
+                                                    var total = 0;
+                                                    //loop through subtotal
+                                                    $(".targetfields .shoping__cart__total__" + id).each(function () {
                                                         //chck if not empty
                                                         var value = $(this).text() != "" ? parseFloat($(this).text()) : 0;
                                                         total += value; //add that value
-                                                      })
-                                                      //assign to total span
-                                                      $("#total__"+id).text(total.toFixed(0))
+                                                    })
+                                                    //assign to total span
+                                                    $("#total__" + id).text(total.toFixed(0))
                                                 }
                                             </script>
-                                            
+
                                         </th>
                                     </tr>
-                                    
+
                                 }
                             </tbody>
                         </table>
@@ -156,50 +159,51 @@
 </div>
 
 @section Scripts {
-<script>
-        $(document).ready(function() {
-      //Fixing jQuery Click Events for the iPad
-      var ua = navigator.userAgent,
-        event = (ua.match(/iPad/i)) ? "touchstart" : "click";
-      if ($('.table').length > 0) {
-        $('.table .header').on(event, function() {
-          $(this).toggleClass("active", "").nextUntil('.header').css('display', function(i, v) {
-            return this.style.display === 'table-row' ? 'none' : 'table-row';
-          });
-        });
-      }
-    })
-</script>
-<script>
-    function updateOrderStatus(id, status) {
+    <script>
+        $(document).ready(function () {
+            //Fixing jQuery Click Events for the iPad
+            var ua = navigator.userAgent,
+                event = (ua.match(/iPad/i)) ? "touchstart" : "click";
+            if ($('.table').length > 0) {
+                $('.table .header').on(event, function () {
+                    $(this).toggleClass("active", "").nextUntil('.header').css('display', function (i, v) {
+                        return this.style.display === 'table-row' ? 'none' : 'table-row';
+                    });
+                });
+            }
+        })
+    </script>
+    <script>
+        function updateOrderStatus(id, status) {
 
             $.ajax({
-    		type: 'GET',
-    		url: "/admin/order/update-order-status/" + id + "/" + status,
-    		contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-    		// data: data,
-    		success: function(result) {
-                Toastify({
-                  text: "Thành công",
-                  duration: 3000,
-                  close: true,
-                  gravity: "top", // `top` or `bottom`
-                  position: "left", // `left`, `center` or `right`
-                  stopOnFocus: true, // Prevents dismissing of toast on hover
-                  style: {
-                    background: "linear-gradient(to right, #00b09b, #96c93d)",
-                  },
-                  onClick: function(){} // Callback after click
-                }).showToast();
-            },
-    		error: function(error) {
-    			console.log('Failed ');
-    		}
-    	})
-        
-    }
+                type: 'GET',
+                url: "/admin/order/update-order-status/" + id + "/" + status,
+                contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                success: function (result) {
+                    Toastify({
+                        text: "Thành công",
+                        duration: 3000,
+                        close: true,
+                        gravity: "top", // `top` or `bottom`
+                        position: "left", // `left`, `center` or `right`
+                        stopOnFocus: true, // Prevents dismissing of toast on hover
+                        style: {
+                            background: "linear-gradient(to right, #00b09b, #96c93d)",
+                        },
+                        onClick: function () { } // Callback after click
+                    }).showToast();
 
-</script>
+                    // Refresh lại trang sau khi Toastify hiện
+                    location.reload();
+                },
+                error: function (error) {
+                    console.log('Failed ');
+                }
+            });
+        }
+    </script>
+
 }
 
 <style>

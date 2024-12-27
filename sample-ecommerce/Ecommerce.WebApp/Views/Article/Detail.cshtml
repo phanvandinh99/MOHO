@@ -1,0 +1,52 @@
+﻿@model Ecommerce.Data.Entities.Article
+
+@{
+    ViewData["Title"] = "Chi Tiết Bài Viết";
+}
+
+<!-- Breadcrumb Section Begin -->
+<section class="breadcrumb-section set-bg" data-setbg="/client/img/breadcrumb.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="breadcrumb__text">
+                    <h2 style="color:black">@Model.Title</h2>
+                    <div class="breadcrumb__option">
+                        <a href="/article" style="color:black">Bài Viết</a>
+                        <span style="color:black">@Model.Title</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb Section End -->
+<!-- Product Details Section Begin -->
+<section class="product-details spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-6">
+                <div class="product__details__pic">
+                    <div class="product__details__pic__item d-flex justify-content-center">
+                        <img class="product__details__pic__item--large img-fluid"
+                             src="https://localhost:7025/article/@Model.Image"
+                             alt="@Model.Title"
+                             style="max-width: 50%; height: 60%;">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="product__details__text">
+                    <h3>Bài Viết: @Model.Title</h3>
+                    <ul>
+                        <li><b>Mã Bài Viết:</b> <span>@Model.Id</span></li>
+                        <li><b>Ngày Đăng:</b> <span>@Model.CreatedAt</span></li>
+                    </ul>
+                    <p>@Model.Content</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Product Details Section End -->

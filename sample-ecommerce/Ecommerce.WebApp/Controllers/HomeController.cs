@@ -19,6 +19,10 @@ namespace Ecommerce.WebApp.Controllers
         public IActionResult Index()
         {
             ViewBag.ListProducts = _context.Products.OrderByDescending(c => c.Id).ToList();
+
+            // Hiển thị danh sách bài viết (3 bài viết mới nhất)
+            ViewBag.ListArticles = _context.Articles.OrderByDescending(c => c.Id).ToList().Take(4);
+
             return View();
         }
 
